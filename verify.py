@@ -4,8 +4,12 @@ import urllib2
 import optparse
 
 # Setup terminal colors
-from blessings import Terminal
-t = Terminal()
+try:
+    from blessings import Terminal
+    color="true"
+    t = Terminal()
+except ImportError:
+    color="false"
 
 # email address list should be in a .txt file seperated by a new line in the same directory
 
@@ -37,11 +41,15 @@ def do_list(filename):
                 the_page = response.read()
 
                 if "ASK_PASSWORD" in the_page:
-                    print(t.green("[*] {0} - VALID".format(line.strip('\n'))))
-
+                    if color == "true":
+                        print(t.green("[*] {0} - VALID".format(line.strip('\n'))))
+                    else:
+                        print "[*] {0} - VALID".format(line.strip('\n'))
                 elif "ASK_PASSWORD" not in the_page:
-                    print(t.red("[*] {0} - NOT VALID".format(line.strip('\n'))))
-
+                    if color == "true":
+                        print(t.red("[*] {0} - NOT VALID".format(line.strip('\n'))))
+                    else:
+                        print "[*] {0} - NOT VALID".format(line.strip('\n'))
             # Handle HTTP exceptions
             except urllib2.HTTPError as e:
                 raise e
@@ -72,10 +80,15 @@ def do_email(email):
         the_page = response.read()
 
         if "ASK_PASSWORD" in the_page:
-            print(t.green("[*] {0} - VALID".format(email)))
-
+            if color == "true":
+                print(t.green("[*] {0} - VALID".format(email)))
+            else:
+                print "[*] {0} - VALID".format(email)
         elif "ASK_PASSWORD" not in the_page:
-            print(t.red("[*] {0} - NOT VALID".format(email)))
+            if color == "true":
+                print(t.red("[*] {0} - NOT VALID".format(email)))
+            else:
+                print "[*] {0} - NOT VALID".format(email)
 
     # Handle HTTP exceptions
     except urllib2.HTTPError as e:
@@ -97,7 +110,10 @@ def main():
     filename = options.filename
 
     if len(sys.argv) < 2:
-        print(t.blue("[*] Usage python {0} -e email || -f <filename.txt>".format(sys.argv[0])))
+        if color == "true":
+            print(t.blue("[*] Usage python {0} -e email || -f <filename.txt>".format(sys.argv[0])))
+        else:
+            print "[*] Usage python {0} -e email || -f <filename.txt>".format(sys.argv[0])
         sys.exit(0)
 
     # Handle command line arguments
