@@ -9,6 +9,7 @@ try:
     color="true"
     t = Terminal()
 except ImportError:
+    print "Blessings module not found. Colors will not be displayed"
     color="false"
 
 # email address list should be in a .txt file seperated by a new line in the same directory
