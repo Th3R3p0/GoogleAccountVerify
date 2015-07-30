@@ -12,4 +12,6 @@ Change hard coded files to pass by command line parameters
 
 Allow a new file to be created if it does not exist
 
-Allow a single e-maill address to be passed as a command line argument
+
+
+Thanks @she3ytes for adding funcionaility for command line arguments, single emails to be passed via command line and colors!
